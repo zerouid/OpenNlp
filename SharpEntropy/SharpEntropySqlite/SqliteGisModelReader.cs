@@ -1,17 +1,17 @@
+using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
 
 namespace SharpEntropy.IO
 {
-	/// <summary>
-	/// Summary description for SqliteGisModelReader.
-	/// </summary>
-	public class SqliteGisModelReader : IGisModelReader
+    /// <summary>
+    /// Summary description for SqliteGisModelReader.
+    /// </summary>
+    public class SqliteGisModelReader : IGisModelReader
 	{
-		private SQLiteConnection mDataConnection;
-		private SQLiteCommand mGetParameterCommand;
+		private SqliteConnection mDataConnection;
+		private SqliteCommand mGetParameterCommand;
 		private IDbDataParameter mPredicateParameter;
 
 		private int mCorrectionConstant;
@@ -20,10 +20,10 @@ namespace SharpEntropy.IO
 
 		public SqliteGisModelReader(string fileName)
 		{
-			mDataConnection = new SQLiteConnection("Data Source=" + fileName + ";Compress=False;Synchronous=Off;UTF8Encoding=True;Version=3");
+			mDataConnection = new SqliteConnection("Data Source=" + fileName + ";Compress=False;Synchronous=Off;UTF8Encoding=True;Version=3");
 			mDataConnection.Open();
 
-			SQLiteCommand getModelCommand = mDataConnection.CreateCommand();
+			SqliteCommand getModelCommand = mDataConnection.CreateCommand();
 			getModelCommand.CommandText = "SELECT CorrectionConstant, CorrectionParameter FROM Model";
 			IDataReader reader = getModelCommand.ExecuteReader();
 			while (reader.Read())
@@ -46,7 +46,7 @@ namespace SharpEntropy.IO
 
 			mGetParameterCommand = mDataConnection.CreateCommand();
 			mGetParameterCommand.CommandText = "SELECT PredicateParameter.OutcomeID, PredicateParameter.Parameter FROM PredicateParameter INNER JOIN Predicate ON PredicateParameter.PredicateID = Predicate.PredicateID WHERE Predicate.PredicateLabel = ?";
-            mPredicateParameter = new SQLiteParameter();
+            mPredicateParameter = new SqliteParameter();
 			mPredicateParameter.DbType = DbType.String;
 			mPredicateParameter.Size = 255;
             mGetParameterCommand.Parameters.Add(mPredicateParameter);
@@ -86,7 +86,7 @@ namespace SharpEntropy.IO
 		public void GetPredicateData(string predicateLabel, int[] featureCounts, double[] outcomeSums)
 		{
 			mPredicateParameter.Value = predicateLabel;
-			SQLiteDataReader getParameterReader = mGetParameterCommand.ExecuteReader();
+			SqliteDataReader getParameterReader = mGetParameterCommand.ExecuteReader();
 			int outcomeId;
 			double parameter;
 			while (getParameterReader.Read())

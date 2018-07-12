@@ -35,16 +35,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 
 namespace OpenNLP.Tools.Tokenize
 {
-	/// <summary>
-	/// Generate event contexts for maxent decisions for tokenization detection.
-	/// </summary>
-	public class TokenEventReader : SharpEntropy.ITrainingEventReader
+    /// <summary>
+    /// Generate event contexts for maxent decisions for tokenization detection.
+    /// </summary>
+    public class TokenEventReader : SharpEntropy.ITrainingEventReader
 	{
         private static readonly SharpEntropy.IContextGenerator<Tuple<string, int>> ContextGenerator = new TokenContextGenerator();
 		private readonly StreamReader _streamReader;

@@ -36,7 +36,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Runtime.Serialization;
@@ -44,10 +43,10 @@ using System.Runtime.Serialization;
 namespace OpenNLP.Tools.Parser
 {
 
-	/// <summary>
-	/// Exception class for problems detected during parsing.
-	/// </summary>
-	[Serializable]
+    /// <summary>
+    /// Exception class for problems detected during parsing.
+    /// </summary>
+    [Serializable]
 	public class ParseException : ApplicationException
 	{
 		public ParseException(){}
